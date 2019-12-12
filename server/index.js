@@ -1,14 +1,21 @@
 // node层代码  通过webpack dev:server打包babel处理
-import React from 'react'
-import express from 'express'
-import { renderToString } from 'react-dom/server'
-import App from '../src/App'
+import React from "react";
+import express from "express";
+import { renderToString } from "react-dom/server";
+import App from "../src/App";
+import { StaticRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "../src/store/index";
 
-const app = express()
-app.use(express.static('public')) // 将public转化为静态资源，引用时不必写入如19行
-app.get('/', (req, res) => {
-  const content = renderToString(App) // 把dom解析成字符串
-  res.send(`
+const app = express();
+app.use(express.static("public")); // 将public转化为静态资源，引用时不必写入如19行
+app.get("*", (req, res) => {
+	const content = renderToString(
+		<Provider store={store}>
+			<StaticRouter location={req.url}>{App}</StaticRouter>
+		</Provider>
+	); // 把dom解析成字符串
+	res.send(`
     <html>
       <head>
         <meta charset="utf-8"/>
@@ -19,8 +26,8 @@ app.get('/', (req, res) => {
         <script src="./bundle.js"></script>
       </body>
     </html>
-  `)
-})
-app.listen('3000', () => {
-  console.log('监听成功！')
-})
+  `);
+});
+app.listen("3000", () => {
+	console.log("监听成功！");
+});
