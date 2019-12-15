@@ -1,14 +1,22 @@
 import React from "react";
 import ReactDom from "react-dom";
-import { BrowserRouter } from "react-router-dom";
-import App from "../src/App";
+import { BrowserRouter, Route } from "react-router-dom";
+import routes from "../src/App";
 import { Provider } from 'react-redux'
-import store from '../src/store/index'
+import { clientStore } from '../src/store/index'
+import Header from "../src/views/Header";
 
+const store = clientStore()
 const Page = (
   <Provider store={store}>
     <BrowserRouter>
-      {App}
+      <Header />
+      {routes.map(route => {
+        return (
+          <Route {...route}></Route>
+        )
+      })
+    }
     </BrowserRouter>
   </Provider>)
 // 注水 客户端入口

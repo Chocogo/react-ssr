@@ -5,7 +5,9 @@ import { getProduct } from "../store/product";
 function Index(props) {
 	const [count, setCount] = useState(1);
 	useEffect(() => {
-		props.getProduct();
+		if (!props.productLists.length) {
+			props.getProduct();
+		}
 	}, []);
 	return (
 		<div>
@@ -24,6 +26,11 @@ function Index(props) {
 			</ul>
 		</div>
 	);
+}
+// 通过初始化静态方法来请求异步数据
+Index.loadData = (store) => {
+	console.log('-----startgetProduct',store.dispatch(getProduct()))
+	return store.dispatch(getProduct());
 }
 
 // export default <App title="你好"/>;
