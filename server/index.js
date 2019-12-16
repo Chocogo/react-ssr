@@ -7,6 +7,7 @@ import { StaticRouter, matchPath, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import { serverStore } from "../src/store/index";
 import Header from "../src/views/Header";
+// 创建http模块，由原本的跨域请求改为有server请求
 
 const store = serverStore();
 const app = express();
@@ -19,7 +20,10 @@ app.get("*", (req, res) => {
 	//   return match;
 	// });
 	// 服务端初始化时，请求所有异步数据，并存入promises中，执行完数据后插入到首页
+	// if(req.url === '') {
 
+	// }
+	console.log(req.url, '------req.url')
 	let promises = [];
 	routes.some(route => {
 		const match = matchPath(req.url, route);

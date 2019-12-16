@@ -14,7 +14,7 @@ const updateProduct = (lists) => {
 export const getProduct = () => {
   return (dispatch) => {
     return new Promise((resolve) => { // 处理避免错误ajax的异步方法：  返回promise, 将错误rosolve处理掉
-      return Axios.get('http://localhost:8088/api/getProduct1', {
+      return Axios.get('http://localhost:8088/api/getProduct', {
         params: {
           userId: 338
         }
